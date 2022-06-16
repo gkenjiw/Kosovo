@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "592914030987",
+    "project_id": "kosovo-48ae9",
+    "storage_bucket": "kosovo-48ae9.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:592914030987:android:f1f75d9615fa1ef6168f8e",
+        "android_client_info": {
+          "package_name": "com.example.kosovo"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "592914030987-8k12ao1qr7m9ldnabknipn815an4vqhj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA0ZL6WjFEMVLsuuPXqTsJYChQUxLtlsKg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "592914030987-8k12ao1qr7m9ldnabknipn815an4vqhj.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
