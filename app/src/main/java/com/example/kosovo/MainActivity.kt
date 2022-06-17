@@ -61,7 +61,7 @@ class MainActivity : AppCompatActivity() {
             setupFirebase()
             listProducts()
         } else {
-            Toast.makeText(this, "Ka otario nao tem conta", Toast.LENGTH_LONG).show()
+            Toast.makeText(this, "Erro na autenticação", Toast.LENGTH_LONG).show()
             finishAffinity()
         }
     }
