@@ -13,8 +13,13 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.StorageException
+import com.google.firebase.storage.StorageReference
 import com.google.firebase.storage.ktx.component1
+import com.google.firebase.storage.ktx.storage
+import com.squareup.picasso.Picasso
 
 class MainActivity : AppCompatActivity() {
     lateinit var binding: ActivityMainBinding
@@ -72,23 +77,34 @@ class MainActivity : AppCompatActivity() {
     fun listProducts() {
         binding.container.removeAllViews()
 
-        val storage = FirebaseStorage.getInstance()
-        val listRef = storage.reference.child("Products")
+        val db = FirebaseFirestore.getInstance()
 
-        listRef.listAll()
-            .addOnSuccessListener { (items) ->
-                items.forEach { item ->
-                    val cardBinding = CardBinding.inflate(layoutInflater)
+        val docRef = db.collection("Products")
+        docRef.get()
+            .addOnSuccessListener { documents ->
+                for (document in documents) {
+                    if (document != null) {
+                        val cardBinding = CardBinding.inflate(layoutInflater)
 
-                    cardBinding.name.text = item.name
-                    Glide.with(this)
-                        .load(item)
-                        .into(cardBinding.image)
+                        cardBinding.name.text = document.getString("Name")
+                        cardBinding.price.text = document.getString("Price")
+                        Picasso.get().load(document.getString("Image")).resize(200,200).into(cardBinding.image)
 
-                    binding.container.addView(cardBinding.root)
+                        cardBinding.image.setOnClickListener() {
+                            val intent = Intent(this, ProductDetail::class.java)
+                            intent.putExtra("image", document.getString("Image"))
+                            intent.putExtra("name", document.getString("Name"))
+                            intent.putExtra("desc", document.getString("Desc"))
+                            intent.putExtra("price", document.getString("Price"))
+                            startActivity(intent)
+                        }
 
-
+                        binding.container.addView(cardBinding.root)
+                    }
                 }
+            }
+            .addOnFailureListener { exception ->
+                Toast.makeText(this, "Error: $exception", Toast.LENGTH_LONG)
             }
     }
 }
